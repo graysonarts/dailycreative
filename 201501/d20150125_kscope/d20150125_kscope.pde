@@ -1,4 +1,5 @@
 int FRAME_SIZE = 1;
+boolean take_picture = false;
 
 interface kdrawer {
 	public void draw(PGraphics r);
@@ -107,11 +108,9 @@ class krender {
 	}
 
 	void update() {
-		count += FRAME_SIZE;
-		x_offset -= sin(radians(count))*2.0;
-		y_offset -= cos(radians(count))*2.0;
+		x_offset = lerp(-drawer.xsize(), drawer.xsize(), (float)this.parent.mouseX / (float)this.parent.width);
+		y_offset = lerp(-drawer.ysize(), drawer.ysize(), (float)this.parent.mouseY / (float)this.parent.height);
 
-		count = count % 360;
 		// x_offset = min(size, min(x_offset, 0));
 		// y_offset = min(size, min(y_offset, 0));
 	}
@@ -124,7 +123,7 @@ class krender {
 	private int t_height;
 	private int x_grid, y_grid;
 	private int x_grid_step, y_grid_step;
-	private int count = 0;
+	public int count = 0;
 };
 
 class ImageDrawer implements kdrawer {
@@ -152,7 +151,7 @@ ImageDrawer drawer;
 int count;
 
 void setup() {
-	size(displayWidth, displayHeight);
+	size(1024, 768);
 
 	frameRate(30);
 	smooth();
@@ -163,15 +162,34 @@ void setup() {
 	renderer = new krender(this, 300, drawer);
 }
 
-// boolean sketchFullScreen() {
-// 	return true;
-// }
+void mouseMoved() {
+	renderer.update();
+}
+
+void keyReleased() {
+	switch(keyCode) {
+		case ' ':
+			take_picture = true;
+			break;
+
+		case LEFT:
+			renderer.count += 1;
+			break;
+
+		case RIGHT:
+			renderer.count -= 1;
+			break;
+
+	}
+}
 
 void draw() {
-	renderer.update();
 	renderer.draw();
 
-	count += FRAME_SIZE;
+	if (take_picture) {
+		saveFrame("frame-####.jpg");
+		take_picture = false;
+	}
 	// saveFrame("frame-####.tif");
 	// if (count > 1500) {
 	// 	noLoop();
