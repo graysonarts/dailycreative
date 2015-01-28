@@ -111,21 +111,17 @@ var HandlebarsCompiler = require('hbsfy/runtime');
 module.exports = HandlebarsCompiler.template({"1":function(depth0,helpers,partials,data,depths) {
   var stack1, lambda=this.lambda, escapeExpression=this.escapeExpression, blockHelperMissing=helpers.blockHelperMissing, buffer = "<div class=\"grid-row\" id=\"row-"
     + escapeExpression(lambda((data && data.index), depth0))
-    + "\">\n";
+    + "\">";
   stack1 = blockHelperMissing.call(depth0, lambda((depths[1] != null ? depths[1].cols : depths[1]), depth0), {"name":"../cols","hash":{},"fn":this.program(2, data, depths),"inverse":this.noop,"data":data});
   if (stack1 != null) { buffer += stack1; }
   return buffer + "</div>\n";
 },"2":function(depth0,helpers,partials,data,depths) {
   var lambda=this.lambda, escapeExpression=this.escapeExpression;
-  return "	<div class=\"grid-cell\" id=\"cell-"
+  return "<div class=\"grid-cell\" id=\"cell-"
     + escapeExpression(lambda(depths[1], depth0))
     + "-"
     + escapeExpression(lambda((data && data.index), depth0))
-    + "\">\n      <a href=\"#\">"
-    + escapeExpression(lambda(depths[1], depth0))
-    + ", "
-    + escapeExpression(lambda(depth0, depth0))
-    + "</a>\n	</div>\n";
+    + "\"><a href=\"#\">&nbsp;</a></div>";
 },"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data,depths) {
   var stack1, helper, options, functionType="function", helperMissing=helpers.helperMissing, blockHelperMissing=helpers.blockHelperMissing;
   stack1 = ((helper = (helper = helpers.rows || (depth0 != null ? depth0.rows : depth0)) != null ? helper : helperMissing),(options={"name":"rows","hash":{},"fn":this.program(1, data, depths),"inverse":this.noop,"data":data}),(typeof helper === functionType ? helper.call(depth0, options) : helper));
