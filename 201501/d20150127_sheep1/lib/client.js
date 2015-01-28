@@ -15,7 +15,7 @@
     	return "#" + r.toString(16) + g.toString(16) + b.toString(16)
     }
 
-	var grid_size = 10
+	var grid_size = 20
 	var grid = require('./client/grid')
 	var index_template = require('./client/templates/index.hbs')
 	var _ = require('lodash')
