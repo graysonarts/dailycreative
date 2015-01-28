@@ -1,0 +1,21 @@
+{
+  "name": "sheep-ketch",
+  "version": "0.0.1",
+  "dependencies": {
+    "browserify": "^8.1.1",
+    "lodash": "^3.0.0",
+    "socket.io": "^1.3.2"
+  },
+  "devDependencies": {
+    "gulp": "^3.8.10",
+    "handlebars": "^2.0.0",
+    "hbsfy": "^2.2.1",
+    "vinyl-source-stream": "^1.0.0"
+  },
+  "private": true,
+  "browserify": {
+    "transform": [
+      "hbsfy"
+    ]
+  }
+}
