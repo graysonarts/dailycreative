@@ -10,6 +10,8 @@
     "gulp": "^3.8.10",
     "handlebars": "^2.0.0",
     "hbsfy": "^2.2.1",
+    "jshint": "^2.6.0",
+    "precommit-hook": "^1.0.7",
     "vinyl-source-stream": "^1.0.0"
   },
   "private": true,

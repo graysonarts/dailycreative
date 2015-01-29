@@ -1,7 +1,9 @@
+/* jshint browser: true */
+/* global io */
 (function() {
 	var supports_html5_storage = function() {
        try {
-         return 'localStorage' in window && window['localStorage'] !== null;
+         return 'localStorage' in window && window.localStorage !== null;
        } catch (e) {
          return false;
        }
@@ -12,7 +14,7 @@
     	var g = Math.floor(Math.random() * 255)
     	var b = Math.floor(Math.random() * 255)
 
-    	return "#" + r.toString(16) + g.toString(16) + b.toString(16)
+    	return '#' + r.toString(16) + g.toString(16) + b.toString(16)
     }
 
 	var grid_size = 20
@@ -23,8 +25,8 @@
 
 	// Store your random color so that it's always your random color
 	if (supports_html5_storage()) {
-		color = localStorage['color'] || color
-		localStorage['color'] = color
+		color = localStorage.color || color
+		localStorage.color = color
 	}
 
 	document.body.innerHTML = index_template({
@@ -33,9 +35,17 @@
 	})
 
 	    var socket = io()
-	    var board = grid(socket, function(color, location) {
+	    var board = new grid(20);
+	    console.log(board)
+
+	    board.on('set', function(location, color) {
 	    	var element = document.getElementById(location)
 	    	element.style.backgroundColor = color
+	    })
+
+	    board.on('clear', function(location) {
+	    	var element = document.getElementById(location)
+	    	element.style.backgroundColor = ''
 	    })
 
 	    socket.on('state', function(data) {
@@ -50,12 +60,12 @@
 	    	})
 	    })
 
-	    socket.on('delete', function(data) {
-	    	board.toggleGrid(data.location)
+	    socket.on('delete', function(location) {
+	    	board.clearCell(location)
 	    })
 
-	    socket.on('setColor', function(data) {
-	    	board.toggleGrid(data.location, data.color)
+	    socket.on('setColor', function(location, color) {
+	    	board.setColor(location, color)
 	    })
 
 	    var elements = document.getElementsByClassName('grid-cell')

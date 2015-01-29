@@ -1,16 +1,11 @@
-var app = require('http').createServer(handler)
-var io = require('socket.io')(app)
 var fs = require('fs')
-var grid = require('./client/grid')
-var board = grid(io, function() {})
-app.listen(8000);
 
 function handler(req, res) {
 	var url = req.url
 	if (req.url == '/') {
 		url = '/index.html'
 	}
-	var path = __dirname + "/../build" + url
+	var path = __dirname + '/../build' + url
 	fs.readFile(path,
 		function (err, data) {
 			if (err) {
@@ -24,11 +19,29 @@ function handler(req, res) {
 		})
 }
 
+var app = require('http').createServer(handler)
+var io = require('socket.io')(app)
+var grid = require('./client/grid')
+var board = new grid(20)
+app.listen(8000)
+
+board.on('set', function(location, color) {
+	io.emit('setColor', location, color)
+})
+
+board.on('clear', function(location) {
+	io.emit('delete', location)
+})
+
 io.on('connection', function (socket) {
 	console.log(board.grid)
 	socket.emit('state', board.grid)
 
 	socket.on('clicked', function (data) {
-		board.toggleGrid(data.location, data.color)
+		if (!board.matches(data.location, data.color)) {
+			board.setColor(data.location, data.color)
+		} else {
+			board.clearCell(data.location)
+		}
 	})
 })
