@@ -18,8 +18,9 @@
     }
 
 	var grid_size = 20
-	var grid = require('./client/grid')
-	var index_template = require('./client/templates/index.hbs')
+	var grid = require('../shared/grid')
+	var index_template = require('./templates/grid.jade')
+    console.log(index_template)
 	var _ = require('lodash')
 	var color = random_color()
 

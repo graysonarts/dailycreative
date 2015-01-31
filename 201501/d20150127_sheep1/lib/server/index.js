@@ -5,7 +5,7 @@ function handler(req, res) {
 	if (req.url == '/') {
 		url = '/index.html'
 	}
-	var path = __dirname + '/../build' + url
+	var path = __dirname + '/../client' + url
 	fs.readFile(path,
 		function (err, data) {
 			if (err) {
@@ -21,9 +21,10 @@ function handler(req, res) {
 
 var app = require('http').createServer(handler)
 var io = require('socket.io')(app)
-var grid = require('./client/grid')
+var grid = require('./grid')
 var board = new grid(20)
 app.listen(8000)
+console.log('Listening on 8000')
 
 board.on('set', function(location, color) {
 	io.emit('setColor', location, color)
