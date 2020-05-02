@@ -4,3 +4,6 @@ build-tmp
 node_modules
 dist
 .idea
+bin
+obj
+.envrc
